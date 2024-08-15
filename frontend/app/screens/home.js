@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Modal, Text, TouchableOpacity, Image } from 'react-native';
+import { useNavigation} from '@react-navigation/native';
 
-
-function HomeScreen({ navigation }) {
+function HomeScreen() {
+    
+    const navigation = useNavigation();
     const [showOptions, setShowOptions] = useState(false);
-
 
     const handleUserOption = (option) => {
         setShowOptions(false);
@@ -17,18 +18,20 @@ function HomeScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            {/* <Image source={require('../../assets/GIBL_Logo.png')} style={styles.logo} /> */}
+            <Image source={require('../../assets/GIBL_Logo.png')} style={styles.logo} />
             <View style={styles.textBox}>
-                <Text style={styles.welcomeText}>Welcome to GlobalIME Pocket Expenses</Text>
-                
+                <Text style={styles.welcomeText}>Welcome to GlobalIME Pocket Expenses</Text>    
             </View>
+
             <Text style={styles.subText}>Kindly Choose one</Text>
             <TouchableOpacity onPress={() => navigation.navigate('AdminLogin')} style={styles.adminButton}>
                 <Text style={styles.buttonText}>Admin</Text>
             </TouchableOpacity>
+
             <TouchableOpacity onPress={() => setShowOptions(true)} style={styles.userButton}>
                 <Text style={styles.buttonText}>User</Text>
             </TouchableOpacity>
+            
             <Modal
                 visible={showOptions}
                 animationType="slide"
