@@ -19,8 +19,8 @@ function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="AdminLogin" component={AdminLogin} />
-        {/* <Stack.Screen name="Register" component={Register} /> */}
-        {/* <Stack.Screen name="Login" component={Login} /> */}
+        <Stack.Screen name="Register" component={Register} /> 
+        <Stack.Screen name="Login" component={Login} /> 
       </Stack.Navigator> 
     </NavigationContainer>
   );
