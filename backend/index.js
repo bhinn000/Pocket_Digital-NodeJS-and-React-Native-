@@ -7,27 +7,12 @@ const mongoose=require("mongoose")
 app.use(express.json()) 
 
 const routes=require("./src/routes/route")
-// const accountHolderDetails=require("./controllers/accountHolder") // this has confusion//userSchema
-// const accountActivityDetails=require("./controllers/accountActivity")//accountDetails ***
-// const trashAccountDetails=require("./controllers/trashUser")
-// const adminDetails=require("./controllers/admin")  
-// const feedbackDetails=require("./controllers/feedback")
-// const receiverSchema=require("./controllers/receiverSchema")
-// const mainBankIDdetails=require("./controllers/mainBankID")
-// const preSetting_model=require("./controllers/preSettings")
 
-// const bcrypt=require("bcrypt")
-// const jwt=require("jsonwebtoken") 
-// const util = require('util');
-// const fs = require('fs');
-// const path = require('path'); 
-// const accountHolder = require("./controllers/accountHolder")
-// const axios=require("axios") 
 
 const mongoUrl=
 process.env.mongoUrl
 
-//port number
+//port number 
 app.listen(8086,()=>{
     console.log("NodeJS is running")
 })

@@ -26,12 +26,12 @@ function Login() {
             name:name 
         }  
         console.log("Sending login request with data:", userData);
-        axios.post('http://192.168.43.55:5001/login', userData)
+        axios.post('http://192.168.1.3:8086/api/login', userData)
         .then(res=>{
             if(res.data.status=="ok"){
                 AsyncStorage.setItem('token_name' , res.data.token)
                 console.log("Test Login")
-                navigation.navigate("Main_screen")         
+                navigation.navigate("Role")         
             }
             else {
                 console.error("Login failed:", res.data.data);
@@ -42,49 +42,6 @@ function Login() {
         })
     }
     
-    // function handleLogin(){
-    //     const userData={
-    //         name:name 
-    //     }  
-    //     console.log("Sending login request with data:", userData);
-    //     axios.post('http:/192.168.43.55:5001/login', userData)
-    //     .then(res=>{
-    //         if(res.data.status=="ok"){
-    //             AsyncStorage.setItem('token_name' , res.data.token)
-    //             navigation.navigate("Main_screen")         
-    //         }
-    //         else {
-    //             console.error("Login failed:", res.data.data);
-    //         }
-    //     })
-    //     .catch(err=>{
-    //         console.error("Error during login:", err);
-    //     })
-    // }
-
-    //see this (suryam)
-    // function handleLogin(){
-    //     const userData = {
-    //         name: name,
-    //         userId: userID,
-    //         password: password
-    //     };  
-    //     console.log("Sending login request with data:", userData);
-    //     axios.post('http://192.168.43.55:5001/login', userData)
-    //     .then(res => {
-    //         if(res.data.status == "ok") {
-    //             AsyncStorage.setItem('token_name' , res.data.token)
-    //             navigation.navigate("Main_screen")         
-    //         } else {
-    //             console.error("Login failed:", res.data.data);
-    //         }
-    //     })
-    //     .catch(err => {
-    //         console.error("Error during login:", err);
-    //     });
-    // }
-    
-
     return (
         <ScrollView 
             showsVerticalScrollIndicator={false}

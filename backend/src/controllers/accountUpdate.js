@@ -1,12 +1,15 @@
 //register and login logic
 
+// required library
+const bcrypt=require("bcrypt")
+const jwt=require("jsonwebtoken") 
+const JWT_SECRET=process.env.JWT_SECRET
+// required files
 const accountHolderDetails = require("../models/accountHolder"); 
 const mainBankIDdetails=require("../models/mainBankID")
 
-
 const register=async (req, res) => {
     const { name, email, phoneNumber, password, mainID } = req.body;
- 
     try {
         // Check if the mainID exists in the mainBankIDdetails collection
         const haveMainBankId = await mainBankIDdetails.findOne({ mainBankId: mainID });
@@ -52,12 +55,11 @@ const register=async (req, res) => {
 };
 
 
-
 const login = async(req,res)=>{
     const {name}=req.body
     console.log("Received login request with name:", name);
     try{
-        const userExists=await accountHolderDetails.findOne({name:name})//backend:frontend
+        const userExists=await accountHolderDetails.findOne({name:name})//backend:frontend , finding on the basis of name
         // const userExists=await accountHolderDetails.findOne({name:'Ramun'})//backend:frontend
         if(!userExists){
             console.log("User not found:", name); 

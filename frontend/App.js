@@ -4,12 +4,11 @@ import { AppRegistry } from 'react-native';
 import React from 'react';
 import { name as appName } from './app.json';
 
-
-
 import HomeScreen from './app/screens/home'; 
 import AdminLogin from './app/screens/AdminLogin';
 import Register from './app/screens/Register';
 import Login from './app/screens/Login';
+import Role from './app/screens/Role';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +20,7 @@ function App() {
         <Stack.Screen name="AdminLogin" component={AdminLogin} />
         <Stack.Screen name="Register" component={Register} /> 
         <Stack.Screen name="Login" component={Login} /> 
+        <Stack.Screen name="Role" component={Role}/>
       </Stack.Navigator> 
     </NavigationContainer>
   );
