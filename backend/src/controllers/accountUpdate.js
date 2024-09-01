@@ -4,6 +4,7 @@
 const bcrypt=require("bcrypt")
 const jwt=require("jsonwebtoken") 
 const JWT_SECRET=process.env.JWT_SECRET
+
 // required files
 const accountHolderDetails = require("../models/accountHolder"); 
 const mainBankIDdetails=require("../models/mainBankID")

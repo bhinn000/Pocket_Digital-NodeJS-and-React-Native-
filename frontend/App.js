@@ -9,6 +9,8 @@ import AdminLogin from './app/screens/AdminLogin';
 import Register from './app/screens/Register';
 import Login from './app/screens/Login';
 import Role from './app/screens/Role';
+import SetFieldRate from './app/screens/SetFieldRate';
+import ViewFieldRate from './app/screens/ViewFieldRate';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +23,8 @@ function App() {
         <Stack.Screen name="Register" component={Register} /> 
         <Stack.Screen name="Login" component={Login} /> 
         <Stack.Screen name="Role" component={Role}/>
+        <Stack.Screen name="SetFieldRate" component={SetFieldRate}/>
+        <Stack.Screen name="ViewFieldRate" component={ViewFieldRate}/>
       </Stack.Navigator> 
     </NavigationContainer>
   );

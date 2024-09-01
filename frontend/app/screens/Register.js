@@ -50,7 +50,7 @@ function Register(props) {
             mainID:mainID
         };
         if (nameVerify && emailVerify && phone_numberVerify && passwordVerify && mainIDVerify) {
-            axios.post('http://192.168.1.3:8086/api/register', userData)
+            axios.post('http://192.168.1.4:8086/api/register', userData)
                 .then(res => {
                     console.log(res.data);
                     if (res.data.status === "ok") {

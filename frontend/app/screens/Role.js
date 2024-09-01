@@ -57,7 +57,7 @@ function Role() {
     async function getData(){
         const token=await AsyncStorage.getItem('token_name')
         // const token=await AsyncStorage.getItem('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUmFtdW4iLCJpYXQiOjE3MTgxNTQyODJ9.eWH-OahzRvLa7JHHGSa17r2yBKNAsr2hRFfrJwHBkK0')
-        axios.post('http://192.168.1.3:8086/api/userData', {token:token}) //backend:varkhar ko token
+        axios.post('http://192.168.1.4:8086/api/userData', {token:token}) //backend:varkhar ko token
         .then(res=>{
             const fetchedUserData = res.data.data;
             setUserData(fetchedUserData)  
@@ -114,7 +114,7 @@ function Role() {
         async function fieldDetails() {
             const token = await AsyncStorage.getItem('token_name');
             try {
-                const response = await axios.post('http://192.168.1.3:8086/api/fieldDetails', { token, selectedField });
+                const response = await axios.post('http://192.168.1.4:8086/api/fieldDetails', { token, selectedField });
                 console.log("Here", JSON.stringify(response.data.message, null, 2));
                 const selectedFieldData = response.data.message.find(item => item.selectedField === selectedField);
                 if (selectedFieldData) {
@@ -142,7 +142,7 @@ function Role() {
     //View_transaction 
     async function handleViewTransaction(){
         const token=await AsyncStorage.getItem('token_name')
-        const response=await axios.post('http://192.168.1.3:8086/api/ViewTransactions' , {token})
+        const response=await axios.post('http://192.168.1.4:8086/api/ViewTransactions' , {token})
         // console.log(response.data.data)
         console.log(JSON.stringify(response.data.data, null, 2));
         setTransactions(response.data.data)
@@ -153,13 +153,13 @@ function Role() {
     //pre-settings for portion for a month
     function handlePreSettings(){
         // setShowPresettings(true);   
-        navigation.navigate("Field Rate Options")
+        navigation.navigate("SetFieldRate")
     }
 
     async function handlePayOkay() {
         const token = await AsyncStorage.getItem('token_name');
         try {
-            const response = await axios.post('http://192.168.1.3:8086/api/payOkay', { token, amount: paymentAmount, selectedField, receiverID });
+            const response = await axios.post('http://192.168.1.4:8086/api/payOkay', { token, amount: paymentAmount, selectedField, receiverID });
             if (response.data.status === "ok") {
                 console.log(response.data.currentBalance);
                 setFieldLimits(prevFieldLimits => ({
@@ -188,7 +188,7 @@ function Role() {
         const token = await AsyncStorage.getItem('token_name');
         try {
             
-            const response = await axios.post('http://192.168.1.3:8086/api/deleteAccount', { token });
+            const response = await axios.post('http://192.168.1.4:8086/api/deleteAccount', { token });
             if (response.data.status === "ok") {
                 await AsyncStorage.removeItem('authToken');
                 await AsyncStorage.removeItem('userId');
@@ -223,7 +223,7 @@ function Role() {
     async function handleFeedback() {
         try {
             const token = await AsyncStorage.getItem('token_name');
-            const response = await axios.post('http://192.168.1.3:8086/api/feedback', { token, rating }); // Send the rating to the backend
+            const response = await axios.post('http://192.168.1.4:8086/api/feedback', { token, rating }); // Send the rating to the backend
             if (response.data.status === "ok") {
               
                 alert(response.data.message)

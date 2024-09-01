@@ -21,7 +21,7 @@ app.listen(8086,()=>{
 // to the root URL path
 app.get('/',(req,res)=>{
     res.send({status:"Started"})
-})
+}) 
 
 app.use('/api', routes);
 
@@ -34,3 +34,4 @@ mongoose.connect(mongoUrl, {
     console.error("Database connection error:", err);
 });
 
+ 
