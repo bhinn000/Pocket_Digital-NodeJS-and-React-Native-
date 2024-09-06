@@ -19,19 +19,14 @@ app.listen(8086,()=>{
 
 //routes and response
 // to the root URL path
-app.get('/',(req,res)=>{
+app.get('/',(req,res)=>{ 
     res.send({status:"Started"})
 }) 
 
 app.use('/api', routes);
 
-mongoose.connect(mongoUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log("Database has been connected");
-}).catch((err) => {
-    console.error("Database connection error:", err);
-});
+mongoose.connect(mongoUrl)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('Database connection error:', err));
 
  

@@ -10,12 +10,6 @@ function SetFieldRate() {
 
     const navigation=useNavigation()
     const [budgetData, setBudgetData] = useState({});
-    const [cafe,setCafe] = useState("");
-    const [cafeVerify, setCafeVerify]=useState(false)
-    const [travel,setTravel] = useState("");
-    const [travelVerify, setTravelVerify]=useState(false)
-    const [canteen,setCanteen] = useState("");
-    const [canteenVerify, setCanteenVerify]=useState(false)
     const [showSubmit,setShowSubmit]=useState(false)
 
     const handleBudgetDataChange = (category, value) => {
@@ -59,9 +53,8 @@ function SetFieldRate() {
                 }
             });
 
-``
             setBudgetData(latestBudgetData);
-            // console.log("Test2" , budgetData)
+            
         } catch (error) {
             console.error('Error fetching presettings:', error);
         }
@@ -73,24 +66,21 @@ function SetFieldRate() {
         fetchPresettings();
     }, []); 
 
-    useEffect(() => {
-        console.log("Test2", budgetData);
-    }, [budgetData]);
-
-
-    function handleCafe(cafeVar){
-        setCafe(cafeVar)
-        setCafeVerify(cafeVar.length>0 && cafeVar > 5)  
+    //min and max expenses rate for each topics: cafe => 10 to 15 % , canteen => 20 to 30 % , travel => 10 to 15 % , remaining in saving(others)and reload back to the main account 
+    // Instead of keeping track , you just check if the age is valid when the user tries to submit the form.
+    function handleCafe(cafeVar) {
+        const isValid = cafeVar.length > 0 && parseFloat(cafeVar) > 5;
+        return isValid;
     }
-
-    function handleCanteen(canteenVar){
-        setCanteen(canteenVar)
-        setCanteenVerify(canteenVar.length>0 && canteenVar > 3)
+    
+    function handleCanteen(canteenVar) {
+        const isValid = canteenVar.length > 0 && parseFloat(canteenVar) > 3;
+        return isValid;
     }
-
-    function handleTravel(travelVar){
-        setTravel(travelVar)
-        setTravelVerify(travelVar.length>0 && travelVar > 3)
+    
+    function handleTravel(travelVar) {
+        const isValid = travelVar.length > 0 && parseFloat(travelVar) > 3;
+        return isValid;
     }
 
     function handleSubmitVisibility(){
@@ -99,22 +89,25 @@ function SetFieldRate() {
 
    
     async function handleSubmit() {
-        const budgetList = Object.keys(budgetData).map(category => ({
-            title: category,
-            budget: budgetData[category].budget
-        }));
 
-            const token = await AsyncStorage.getItem('token_name');
+             const token = await AsyncStorage.getItem('token_name');
+             const budgetList = Object.keys(budgetData).map(category => ({
+                title: category,
+                budget: budgetData[category].budget
+            }));
 
-            const response = await axios.get('http://192.168.1.3:8086/api/preSettingGET', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            
-            response.data.forEach(item=>console.log(item))
-        
-            if(cafeVerify && canteenVerify && travelVerify){
+            const cafeValid = handleCafe(budgetData["Restaurant/Cafe"]?.budget || '');
+            const canteenValid = handleCanteen(budgetData["Canteen"]?.budget || '');
+            const travelValid = handleTravel(budgetData["Travel"]?.budget || '');
+
+            const totalRate=parseInt(budgetData["Restaurant/Cafe"]?.budget) + parseInt(budgetData["Canteen"]?.budget) + parseInt(budgetData["Travel"]?.budget)
+           
+            console.log("Hey")
+            console.log(totalRate)
+            if(totalRate == 100){
+
+                 if(cafeValid && canteenValid && travelValid){
+                
                 await axios.post('http://192.168.1.3:8086/api/preSettingPOST', { token, budgets: budgetList }, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -122,17 +115,23 @@ function SetFieldRate() {
                 })
                     .then(res => {
                         console.log(res.data)
-                        console.log(res.data.message)
                         navigation.navigate("ViewFieldRate")
                     })
                     .catch(error => {
                         console.error("Error:", error);
                     });
+                }
+                else{
+                    console.log("Frontend requirements has not been done")
+                }
+
             }
             else{
-                console.log("Frontend requirements has not been done")
+                console.log("Do mathematical calculation properly , the percentage is always 100%");
             }
 
+        
+           
     }
 
         return (
@@ -142,7 +141,7 @@ function SetFieldRate() {
                     "Restaurant/Cafe",
                     "Canteen",
                     "Travel",
-                  
+                
                 ].map(category => (
                     <ScrollView key={category} style={styles.container}>
                         <Text style={styles.category}>{category}</Text>
@@ -155,31 +154,14 @@ function SetFieldRate() {
                             onChangeText={value =>
                                 {
                                     handleBudgetDataChange(category, value)  
-                            
                                     // console.log("budgetData[category].budget" , budgetData[category].budget)//this is creating problem
                                     handleSubmitVisibility()                    
                                  }
                             
                             }
 
-                            onBlur={() => {
-
-                                if (category === "Restaurant/Cafe") {
-                                    handleCafe(budgetData[category].budget);                            
-                                } else if (category === "Canteen") {
-                                    handleCanteen(budgetData[category].budget);
-                                }
-                                else if (category === "Travel") {
-                                    handleTravel(budgetData[category].budget);
-                                }
-
-                                
-                    
-                            }}
                         />
 
-                     
-                    
                     </ScrollView>
                 ))}
                     {showSubmit &&(
