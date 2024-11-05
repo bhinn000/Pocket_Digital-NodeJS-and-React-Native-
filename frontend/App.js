@@ -1,4 +1,6 @@
 //imported things
+//this is for commenting
+//welcome again
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppRegistry } from 'react-native';
