@@ -1,6 +1,6 @@
 //the database of all the accounts exist
 
-// account holder db
+// account holder database
 const mongoose=require("mongoose")
 const accountHolderSchema = new mongoose.Schema({
     name: {
