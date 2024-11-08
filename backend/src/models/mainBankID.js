@@ -8,7 +8,7 @@ const mainBankIDSchema=new mongoose.Schema({
         required:true,
     },
     paisa:{
-        type:String,
+        type:Number,
         required:true,
     }
   

@@ -1,7 +1,7 @@
 const jwt=require('jsonwebtoken')
 const JWT_SECRET=process.env.JWT_SECRET
 
-const accountActivity=require("../models/theirAccoutActivities")
+const transactionDetail=require("../models/theirAccountActivities")
 const accountHolder=require("../models/accountHolder")
 
 const preSettingPOST =  async (req, res) => {
@@ -12,7 +12,7 @@ const preSettingPOST =  async (req, res) => {
     
         const decodedToken = jwt.verify(token, JWT_SECRET);
         const userName = decodedToken.name;
-        const user = await accountActivity.findOne({ name: userName });
+        const user = await transactionDetail.findOne({ name: userName });
         // console.log(user)
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -45,13 +45,13 @@ const preSettingGET =  async (req, res) => {
     
         const decodedToken = jwt.verify(token, JWT_SECRET); 
         const userName = decodedToken.name;
-        const user = await accountActivity.findOne({ name: userName });
+        const user = await transactionDetail.findOne({ name: userName });
         if (!user) {
             const accountHolderUser = await accountHolder.findOne({ name: userName });
             console.log("Here", accountHolderUser)
             if (accountHolderUser) {
                
-                userActivity = new accountActivity({
+                userActivity = new transactionDetail({
                     name: accountHolderUser.name,
                     bankBalance: [],
                     transactionHistory: [],

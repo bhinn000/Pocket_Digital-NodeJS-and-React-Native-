@@ -6,6 +6,11 @@ const accountActivitySchema=new mongoose.Schema({
         type:String,
         unique: true
     },
+    userId: {
+        type: String,
+        required:true,
+        unique:true
+    },
     bankBalance:[
         {
             loadedAmount:{

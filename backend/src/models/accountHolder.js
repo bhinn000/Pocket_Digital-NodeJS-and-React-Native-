@@ -11,14 +11,14 @@ const accountHolderSchema = new mongoose.Schema({
     },
     // userId: {
     //     type: String,
-    //     required:true
+    //     default: function() {
+    //         // Calculate the userId based on the mainID
+    //         return this.mainID.replace('MBI', 'UID');
+    //     }
     // },
     userId: {
         type: String,
-        default: function() {
-            // Calculate the userId based on the mainID
-            return this.mainID.replace('MBI', 'UID');
-        }
+        unique:true
     },
     email: {
         type: String,
@@ -37,8 +37,7 @@ const accountHolderSchema = new mongoose.Schema({
         required:true
     },
     rating:{
-        type:Number,
-        
+        type:Number, 
     }
 });
     
