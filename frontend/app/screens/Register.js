@@ -19,7 +19,6 @@ function Register(props) {
     const [mainID, setMainID] = useState('');
     const [mainIDVerify, setMainIDVerify] = useState(false);
   
-
     function handleName(nameVar) {
         setName(nameVar);
         setNameVerify(nameVar.length > 1);
@@ -41,7 +40,6 @@ function Register(props) {
     }
 
     function handleSubmit() {
-        console.log("Hello")
         const userData = {
             name: name,
             email: email,
@@ -49,8 +47,9 @@ function Register(props) {
             password: password,
             mainID:mainID
         };
+        
         if (nameVerify && emailVerify && phone_numberVerify && passwordVerify && mainIDVerify) {
-            axios.post('http://192.168.1.4:8086/api/register', userData)
+            axios.post('http://192.168.1.3:8086/api/register', userData)
                 .then(res => {
                     console.log(res.data);
                     if (res.data.status === "ok") {

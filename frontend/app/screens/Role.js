@@ -17,7 +17,6 @@ function Role() {
         "Travel",
     ];
     
-
     const [pay,setPay]=useState('')
     const [payVerify, setPayVerify]=useState(false)
     const [paymentAmount, setPaymentAmount] = useState('');
@@ -49,25 +48,34 @@ function Role() {
     const [loadedAmount, setLoadedAmount] = useState('');
     const [showLoadAmountInput, setshowLoadAmountInput]=useState(false)
     const [fieldLimits, setFieldLimits] = useState({});
-
-
-
     const navigation=useNavigation()
  
     async function getData(){
         const token=await AsyncStorage.getItem('token_name')
-        // const token=await AsyncStorage.getItem('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUmFtdW4iLCJpYXQiOjE3MTgxNTQyODJ9.eWH-OahzRvLa7JHHGSa17r2yBKNAsr2hRFfrJwHBkK0')
-        axios.post('http://192.168.1.4:8086/api/userData', {token:token}) //backend:varkhar ko token
-        .then(res=>{
-            const fetchedUserData = res.data.data;
-            setUserData(fetchedUserData)  
-            setLoading(false); // Set loading state to false after data is fetched 
-            if (fetchedUserData.bankBalance && fetchedUserData.bankBalance.length > 0) {
-                setCurrentBalance(fetchedUserData.bankBalance[0].currentBalance);
+        if (!token) {
+            console.log("Token not found");
+            return;
+        }
+        console.log("Token retrieved: test", token); 
+        axios.post('http://192.168.1.4:8086/api/userData', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
         })
+        .then(res=>{
+            const fetchedUserData = res.data.data; 
+            console.log(fetchedUserData);
+            setUserData(fetchedUserData) 
+            setLoading(false); // Set loading state to false after data is fetched 
+            // if (fetchedUserData.bankBalance && fetchedUserData.bankBalance.length > 0) {
+            //     setCurrentBalance(fetchedUserData.bankBalance[0].currentBalance);
+            // } 
+            setCurrentBalance(fetchedUserData.paisa);
+        })
         .catch(err => {
-            console.log(err);
+            // console.log("Error here " ,err);
+
+            console.log("Error here", err.response ? err.response.data : err.message);
             setLoading(false); // Set loading state to false even if there's an error
         });
     }
@@ -103,6 +111,7 @@ function Role() {
         setReceiverPhNum(phNum)
         setReceiverPhNumVerify(validateReceiverPhNum(phNum))
     }
+
 
     useEffect(()=>{
         getData()
@@ -219,7 +228,7 @@ function Role() {
         }
     }
     
-
+    
     async function handleFeedback() {
         try {
             const token = await AsyncStorage.getItem('token_name');
@@ -255,7 +264,6 @@ function Role() {
             <View style={styles.leftContainer}>
  
             <View style={styles.topHolder}>
-                     
 
                 <View style={styles.balanceContainer}>
                     <Text style={styles.balanceText}>Rs.{isBalanceVisible ? currentBalance : '******* '}</Text>
