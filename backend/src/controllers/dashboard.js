@@ -237,67 +237,8 @@ const fieldDetails = async (req, res) => {
         console.log("++++++++");
         console.log(util.inspect(user, { depth: null, colors: true }));
 
-        // let wholeBudget = user.bankBalance[0].loadedAmount;
-        // let wholeBudget=100
-        // let wholeBudget = mainBankData.paisa;
-        // let fieldLimit = null;
-
-        // if (user.transactionHistory.length > 0) {
-        //     if (user.transactionHistory[0].payMonth == user.bankBalance[0].loadedMonth) {
-        //         console.log("In this month, the first payment has already been done after money loaded for this month");
-
-        //         const fieldDefined = user.bankBalance[0].fieldLimit.some(field => field.selectedField === selectedField);
-
-        //         if (fieldDefined) {
-        //             const selectedFieldLimit = user.bankBalance[0].fieldLimit.find(fl => fl.selectedField === selectedField);
-        //             console.log("Test", selectedFieldLimit);
-        //             return res.send({ status: "ok", message: [selectedFieldLimit] });
-
-        //         } else {
-        //             user.preSettings.forEach(preSetting => {
-        //                 if (selectedField === preSetting.title) {
-        //                     user.bankBalance[0].fieldLimit = user.bankBalance[0].fieldLimit.filter(fl => fl.selectedField !== selectedField);
-        //                     fieldLimit = preSetting.budget / 100 * wholeBudget;
-        //                     user.bankBalance[0].fieldLimit.push({
-        //                         selectedField,
-        //                         amount: fieldLimit
-        //                     });
-
-        //                     console.log("FieldLimit first=>", user.bankBalance[0].fieldLimit);
-        //                     return res.send({ status: "ok", message: user.bankBalance[0].fieldLimit.filter(fl => fl.selectedField === selectedField) });
-        //                 }
-        //             });
-        //         }
-        //     } else if (user.transactionHistory[0].payMonth > user.bankBalance[0].loadedMonth) {
-        //         console.log("You need to load at first to pay for that month because payMonth is greater than loaded Month");
-        //         return res.send({ status: "not ok", message: "Not possible" });
-        //     } else {
-        //         user.preSettings.forEach(preSetting => {
-        //             if (selectedField === preSetting.title) {
-        //                 fieldLimit = preSetting.budget / 100 * wholeBudget;
-        //                 user.bankBalance[0].fieldLimit.push({
-        //                     selectedField,
-        //                     amount: fieldLimit
-        //                 });
-        //                 console.log("FieldLimit first=>", user.bankBalance[0].fieldLimit);
-        //                 return res.send({ status: "ok", message: user.bankBalance[0].fieldLimit.filter(fl => fl.selectedField === selectedField) });
-        //             }
-        //         });
-        //     }
-        // } else {
-        //     user.preSettings.forEach(preSetting => {
-        //         if (selectedField === preSetting.title) {
-        //             fieldLimit = preSetting.budget / 100 * wholeBudget;
-        //             user.bankBalance[0].fieldLimit.push({
-        //                 selectedField,
-        //                 amount: fieldLimit
-        //             });
-        //             console.log("FieldLimit first=>", user.bankBalance[0].fieldLimit);
-        //             return res.send({ status: "ok", message: user.bankBalance[0].fieldLimit.filter(fl => fl.selectedField === selectedField) });
-        //         }
-        //     });
-        // }
-       
+         const latestBankBalance = user.bankBalance.sort((a, b) => new Date(b.loadedDate) - new Date(a.loadedDate))[0];
+         let wholeBudget = latestBankBalance.currentBalance; 
         if (user.transactionHistory.length > 0) {
             if (user.transactionHistory[0].payMonth == user.bankBalance[0].loadedMonth) {
                 console.log("In this month, the first payment has already been done after money loaded for this month");
