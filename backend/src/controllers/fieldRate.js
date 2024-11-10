@@ -12,7 +12,8 @@ const preSettingPOST =  async (req, res) => {
     
         const decodedToken = jwt.verify(token, JWT_SECRET);
         const userName = decodedToken.name;
-        const user = await transactionDetail.findOne({ name: userName });
+        const userId= decodedToken.userId;
+        const user = await transactionDetail.findOne({ userId: userId });
         // console.log(user)
         if (!user) {
             return res.status(404).json({ error: "User not found" });

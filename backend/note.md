@@ -127,7 +127,6 @@ When same details given for registration:
 }
 
 Until you give correct general format of the main bank id and for password too or for phone number , the feather is red 
-You can't give same email id 
 Only one user id can be made out of single 
 
 Ok : 
@@ -149,17 +148,172 @@ User already exists:
     
 }
 
-This email address has been used by another account
-  {
-        "name": "Ram",
-        "email": "samit@gmail.com",
-        "phoneNumber": "9712345678",
-        "password": "abc1!2@",
-        "mainID": "0000-MBI-008"
-}
 
 Regarding Login:
+demo : password is abc1!2@ for Seema 0000-UID-020
+Wrong Pwd:
 
 Regarding Dashboard:
 
 As we can see while login , eg : Seema , her mainBankID is 0000-MBI-020 , in that account there was 50500 , this is shown on the top
+
+Now for Presettings: 
+It should be 100% at total , otherwise it won't work
+You can edit or view your pre settings too.
+
+Now for feedback:
+You can send your rate through choosing number of rates
+Add features where admin want to view it later on.
+
+While Paying:
+If you have not maintained pre-settings field rate , you have to and you are notified
+You can see the limit for each of the topic and make payment within the range only
+
+About Receivers:
+These are demo data sent through the postman:
+    [
+    {
+        "name": "Ahmed Ali",
+        "receiverID": "00-R-01",
+        "phoneNumber": 9800000001,
+        "balance": 5000,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Ayesha Khan",
+        "receiverID": "00-R-02",
+        "phoneNumber": 9700000002,
+        "balance": 10000,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Fatima Baig",
+        "receiverID": "00-R-03",
+        "phoneNumber": 9800000003,
+        "balance": 7500,
+        "organisation": "Sample Institution"
+    },
+    {
+        "name": "Ali Raza",
+        "receiverID": "00-R-04",
+        "phoneNumber": 9700000004,
+        "balance": 12000,
+        "organisation": "Sample Institution"
+    },
+    {
+        "name": "Hassan Abbas",
+        "receiverID": "00-R-05",
+        "phoneNumber": 9800000005,
+        "balance": 9000,
+        "organisation": "Example Company"
+    },
+    {
+        "name": "Sara Iqbal",
+        "receiverID": "00-R-06",
+        "phoneNumber": 9700000006,
+        "balance": 15000,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Omar Shah",
+        "receiverID": "00-R-07",
+        "phoneNumber": 9800000007,
+        "balance": 6000,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Mariam Khan",
+        "receiverID": "00-R-08",
+        "phoneNumber": 9700000008,
+        "balance": 11000,
+        "organisation": "Sample Institution"
+    },
+    {
+        "name": "Zainab Ahmed",
+        "receiverID": "00-R-09",
+        "phoneNumber": 9800000009,
+        "balance": 4000,
+        "organisation": "Example Company"
+    },
+    {
+        "name": "Bilal Javed",
+        "receiverID": "00-R-10",
+        "phoneNumber": 9700000010,
+        "balance": 13000,
+        "organisation": "Sample Institution"
+    },
+    {
+        "name": "Imran Farooq",
+        "receiverID": "00-R-11",
+        "phoneNumber": 9800000011,
+        "balance": 8000,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Nadia Malik",
+        "receiverID": "00-R-12",
+        "phoneNumber": 9700000012,
+        "balance": 9500,
+        "organisation": "Example Company"
+    },
+    {
+        "name": "Ahmed Raza",
+        "receiverID": "00-R-13",
+        "phoneNumber": 9800000013,
+        "balance": 10000,
+        "organisation": "Sample Institution"
+    },
+    {
+        "name": "Fariha Khan",
+        "receiverID": "00-R-14",
+        "phoneNumber": 9700000014,
+        "balance": 7000,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Muneeb Hassan",
+        "receiverID": "00-R-15",
+        "phoneNumber": 9800000015,
+        "balance": 5000,
+        "organisation": "Example Company"
+    },
+    {
+        "name": "Hina Shah",
+        "receiverID": "00-R-16",
+        "phoneNumber": 9700000016,
+        "balance": 12000,
+        "organisation": "Sample Institution"
+    },
+    {
+        "name": "Usman Tariq",
+        "receiverID": "00-R-17",
+        "phoneNumber": 9800000017,
+        "balance": 7500,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Naveen Raza",
+        "receiverID": "00-R-18",
+        "phoneNumber": 9700000018,
+        "balance": 10000,
+        "organisation": "Demo Corp"
+    },
+    {
+        "name": "Kiran Iqbal",
+        "receiverID": "00-R-19",
+        "phoneNumber": 9800000019,
+        "balance": 8000,
+        "organisation": "Example Company"
+    },
+    {
+        "name": "Sajid Mehmood",
+        "receiverID": "00-R-20",
+        "phoneNumber": 9700000020,
+        "balance": 6000,
+        "organisation": "Sample Institution"
+    }
+]
+
+
+
+
