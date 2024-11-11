@@ -59,29 +59,36 @@ const register=async (req, res) => {
     }
 };
 
-const login = async(req,res)=>{
-    const {name}=req.body
-    console.log("Received login request with name:", name);
-    try{
-        const userExists=await accountHolder.findOne({name:name})//backend:frontend , finding on the basis of name
-        // const userExists=await accountHolderDetails.findOne({name:'Ramun'})//backend:frontend
-        if(!userExists){
-            console.log("User not found:", name); 
-            return res.send({status:"Not available" , data:"User doesn't exist"})
-        }
-        // Generate JWT token upon successful login
-        const token = jwt.sign({ name: userExists.name , userId: userExists.userId}, JWT_SECRET);
 
-        console.log("test token name" , token)
-        console.log("User found:", name);
-        return res.status(200).json({ status: "ok", token: token});
-        // return res.status(200).json({ status: "ok", token: token , data:"User exists" });
-        // return res.send({status:"ok" , data:"User exists"})
+const login = async (req, res) => {
+    const { userId, password } = req.body;
+    console.log("Received login request with userId:", userId);
+
+    try {
+        const userExists = await accountHolder.findOne({ userId: userId });
+
+        if (!userExists) {
+            console.log("User not found:", userId);
+            return res.status(200).json({ status: "Not available", message: "User doesn't exist" });
+        }
+
+        // Check if password matches
+        const isPasswordValid = await bcrypt.compare(password, userExists.password);
+        if (!isPasswordValid) {
+            console.log("Incorrect password for user:", userId);
+            return res.status(200).json({ status: "Unauthorized", message: "Invalid password" });
+        }
+
+        // Generate JWT token upon successful login
+        const token = jwt.sign({ name: userExists.name, userId: userExists.userId }, JWT_SECRET);
+        console.log("User found and authenticated:", userId);
+        return res.status(200).json({ status: "ok", token: token });
+
+    } catch (err) {
+        console.error("Error during login:", err);
+        return res.status(500).json({ error: "Internal server error" });
     }
-    catch(err){
-        console.log(err)
-        return res.status(500).send({ error: "Internal server error" });
-    }
-}
+};
+
 
 module.exports = { register, login };

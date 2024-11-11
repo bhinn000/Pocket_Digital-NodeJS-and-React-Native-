@@ -43,37 +43,6 @@ const userData= async(req,res)=>{
     }
 }
 
-// //for payment function in backend
-// const pay= async(req,res)=>{
-//     //check also if it is logged in or not
-//     const {name, amount}=req.body //frontend bata k pathayeko tyo chai rakhne ho
-
-//     const user=await transactionDetail.findOne({name:name})
-//     if(!user){
-//         return res.send({ status:"not ok" , error: "User not found" });
-//     }
-
-
-//     if(user.bankBalance < amount){
-//         return res.send({status:"not ok" , message:"You dont have that much balance"})
-//     }
-//     else if(user.bankBalance - amount < 500){
-//         return res.send({status:"not ok" , message:"Minimum balance to maintain is Rs. 500"})
-//     }
- 
-//     user.bankBalance-=amount
-    
-//     user.transactionHistory.push({
-//             latestBalance:user.bankBalance,
-//             type:'debit',
-//             amount:amount,
-            
-//     })
-     
-//     await user.save()
-//     return res.status(200).json({status:"ok",newBalance:user.bankBalance})
-
-// }
 
 
 
@@ -82,8 +51,8 @@ const viewTransactions = async(req,res)=>{
     const {token}=req.body
     try {
         const decodedToken = jwt.verify(token, JWT_SECRET);
-        const userName = decodedToken.name;
-        const user = await transactionDetail.findOne({ name: userName });
+        const userId = decodedToken.userId;
+        const user = await transactionDetail.findOne({userId:userId });
         if (!user) {
             return res.status(404).send({ status: "error", error: "User not found" });
         }
@@ -233,8 +202,6 @@ const fieldDetails = async (req, res) => {
         const userId = decodedToken.userId;
         const mainBankId = userId.replace('UID', 'MBI');
         const mainBankData = await mainBankDetail.findOne({ mainBankId });
-       
-        console.log("++++++++");
         console.log(util.inspect(user, { depth: null, colors: true }));
 
          const latestBankBalance = user.bankBalance.sort((a, b) => new Date(b.loadedDate) - new Date(a.loadedDate))[0];
@@ -305,13 +272,16 @@ const payOkay = async (req, res) => {
     try {
         const decodedToken = jwt.verify(token, JWT_SECRET);
         const userName = decodedToken.name;
-        const user = await transactionDetail.findOne({ name: userName });
+        const userId = decodedToken.userId;
+        const user = await transactionDetail.findOne({ userId:userId});
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
         console.log("selectedField", selectedField);
 
         const selectedFieldData = user.bankBalance[0].fieldLimit.find(item => item.selectedField === selectedField);
+        console.log(user.bankBalance[0].fieldLimit )
+        console.log(amount)
         if (selectedFieldData.amount < amount) {
             return res.send({ status: "not ok", message: "You don't have that much balance for this field" });
         } else if (user.bankBalance[0].fieldLimit - amount < 10) {

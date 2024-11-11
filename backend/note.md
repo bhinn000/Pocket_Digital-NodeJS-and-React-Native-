@@ -151,7 +151,7 @@ User already exists:
 
 Regarding Login:
 demo : password is abc1!2@ for Seema 0000-UID-020
-Wrong Pwd:
+You cant give wrong password and unavailable userId
 
 Regarding Dashboard:
 
@@ -313,6 +313,75 @@ These are demo data sent through the postman:
         "organisation": "Sample Institution"
     }
 ]
+
+lets make to load money from main bank paisa:
+    {
+    "message": "Bank balance updated successfully",
+    "user": {
+        "_id": "672df56e5c41b0d50d7ded83",
+        "name": "Raman",
+        "userId": "0000-UID-017",
+        "bankBalance": [
+            {
+                "loadedAmount": 2000,
+                "currentBalance": 2000,
+                "fieldLimit": [],
+                "_id": "67305beea52a8d7f9b45f436",
+                "loadedDate": "2024-11-10T12:53:30.817Z",
+                "loadedMonth": 11
+            }
+        ],
+        "transactionHistory": [],
+        "preSettings": [
+            {
+                "title": "Restaurant/Cafe",
+                "budget": 10,
+                "_id": "672f24c08b10c1f4d29f65e5"
+            },
+            {
+                "title": "Canteen",
+                "budget": 40,
+                "_id": "672f24c08b10c1f4d29f65e6"
+            },
+            {
+                "title": "Travel",
+                "budget": 50,
+                "_id": "672f24c08b10c1f4d29f65e7"
+            }
+        ],
+        "__v": 7
+    }
+}
+
+and has reduced from mainBankID:
+
+_id
+6729e50949e3ac8f2339ee61
+mainBankId
+"0000-MBI-017"
+paisa
+33500
+__v
+0
+
+and you can view from the dashboad named as Pocket Expenses is Rs. x
+
+   But if you load more than you have :
+{
+    "userId" : "0000-UID-017",
+    "theMoneyIwanttoload": 50000
+} then you get {
+    "message": "Insufficient funds in the main bank."
+}
+
+And you can view limit on the basis of preSettings for different field you have made 
+Problem with limit for selected field solved
+
+Now regarding payment: 
+The payment for specific field should be within its limit(specific) eg: if for canteen the limit is 1200 , you can't pay 1300
+eg: if you pay 100 , it shows your canteen limit to be 1100 now
+It will update the current pocket digital amount too
+The (limit for each of the field)=> lets say 'limit' will depend upon (the money you have load for the month)=> lets say 'money' , but when you make payment which will surely effect 'money' , but the 'limit' wont change for this month now
 
 
 
