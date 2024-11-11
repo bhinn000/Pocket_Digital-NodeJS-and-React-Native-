@@ -59,7 +59,7 @@ function Role() {
         }
         console.log("Token retrieved: test", token); 
 
-        axios.post('http://192.168.1.4:8086/api/userData', {}, {
+        axios.post('http://192.168.1.5:8086/api/userData', {}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -79,7 +79,7 @@ function Role() {
         });
 
         try {
-            const response = await axios.get('http://192.168.1.4:8086/api/loadMoneyToPocket', {
+            const response = await axios.get('http://192.168.1.5:8086/api/loadMoneyToPocket', {
                 headers: {
                     'Authorization': `Bearer ${token}` 
                 }
@@ -139,7 +139,7 @@ function Role() {
             console.log("Hello I am runnin")
             const token = await AsyncStorage.getItem('token_name');
             try {
-                const response = await axios.post('http://192.168.1.4:8086/api/fieldDetails', { token, selectedField });
+                const response = await axios.post('http://192.168.1.5:8086/api/fieldDetails', { token, selectedField });
                 // console.log("Here", JSON.stringify(response.data.message, null, 2));
                 console.log("Namaste!!") 
                 console.log(response) 
@@ -169,7 +169,7 @@ function Role() {
     //View_transaction 
     async function handleViewTransaction(){
         const token=await AsyncStorage.getItem('token_name')
-        const response=await axios.post('http://192.168.1.4:8086/api/ViewTransactions' , {token})
+        const response=await axios.post('http://192.168.1.5:8086/api/ViewTransactions' , {token})
         // console.log(response.data.data)
         console.log(JSON.stringify(response.data.data, null, 2));
         setTransactions(response.data.data)
@@ -186,7 +186,7 @@ function Role() {
     async function handlePayOkay() {
         const token = await AsyncStorage.getItem('token_name');
         try {
-            const response = await axios.post('http://192.168.1.4:8086/api/payOkay', { token, amount: paymentAmount, selectedField, receiverID });
+            const response = await axios.post('http://192.168.1.5:8086/api/payOkay', { token, amount: paymentAmount, selectedField, receiverID });
             if (response.data.status === "ok") {
                 console.log(response.data.currentBalance);
                 setFieldLimits(prevFieldLimits => ({
@@ -216,7 +216,7 @@ function Role() {
         const token = await AsyncStorage.getItem('token_name');
         try {
             
-            const response = await axios.post('http://192.168.1.4:8086/api/deleteAccount', { token });
+            const response = await axios.post('http://192.168.1.5:8086/api/deleteAccount', { token });
             if (response.data.status === "ok") {
                 await AsyncStorage.removeItem('authToken');
                 await AsyncStorage.removeItem('userId');
@@ -251,7 +251,7 @@ function Role() {
     async function handleFeedback() {
         try {
             const token = await AsyncStorage.getItem('token_name');
-            const response = await axios.post('http://192.168.1.4:8086/api/feedback', { token, rating }); // Send the rating to the backend
+            const response = await axios.post('http://192.168.1.5:8086/api/feedback', { token, rating }); // Send the rating to the backend
             if (response.data.status === "ok") {
               
                 alert(response.data.message)
@@ -279,7 +279,6 @@ function Role() {
             keyboardShouldPersistTaps="handled"    
          >
               
-
             <View style={styles.leftContainer}>
  
             <View style={styles.topHolder}>

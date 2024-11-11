@@ -30,7 +30,7 @@ function SetFieldRate() {
  
         try {
             const token = await AsyncStorage.getItem('token_name');
-            const response = await axios.get('http://192.168.1.4:8086/api/preSettingGET', {
+            const response = await axios.get('http://192.168.1.5:8086/api/preSettingGET', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -106,7 +106,7 @@ function SetFieldRate() {
 
                  if(cafeValid && canteenValid && travelValid){
                 
-                await axios.post('http://192.168.1.4:8086/api/preSettingPOST', { token, budgets: budgetList }, {
+                await axios.post('http://192.168.1.5:8086/api/preSettingPOST', { token, budgets: budgetList }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

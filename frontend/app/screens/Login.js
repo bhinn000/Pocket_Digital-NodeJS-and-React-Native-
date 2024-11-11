@@ -1,5 +1,5 @@
     import React, { useEffect, useState } from 'react';
-    import { Text, TextInput, View, StyleSheet,  ScrollView, Image } from 'react-native';
+    import { Text, TextInput, View, StyleSheet,  ScrollView, Image , Alert } from 'react-native';
     import axios from 'axios';
     import { useNavigation, useRoute} from '@react-navigation/native';
     import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,27 +20,35 @@
             }
         }, [route.params?.accountDeleted]);
 
-            
-        function handleLogin(){
-            const userData={
-                name:name,
-                userId:userID
-            }  
+
+        function handleLogin() {
+            const userData = {
+                name: name,
+                userId: userID,
+                password: password  
+            };
             console.log("Sending login request with data:", userData);
-            axios.post('http://192.168.1.4:8086/api/login', userData)
-            .then(res=>{
-                if(res.data.status=="ok"){
-                    AsyncStorage.setItem('token_name' , res.data.token)
-                    console.log("Test Login")
-                    navigation.navigate("Role")         
-                }
-                else {
-                    console.error("Login failed:", res.data.data);
-                }
-            })
-            .catch(err=>{
-                console.error("Error during login:", err);
-            })
+        
+            axios.post('http://192.168.1.5:8086/api/login', userData)
+                .then(res => {
+                    if (res.data.status === "ok") {
+                        AsyncStorage.setItem('token_name', res.data.token);
+                        console.log("Test Login");
+                        Alert.alert("Login Successful", "You have logged in successfully!");
+                        navigation.navigate("Role");
+                    } else if(res.data.status === "Not available"){
+                        Alert.alert("Login Failed", res.data.message);
+                        console.error("Login failed:", res.data.message);
+                    }
+                    else if(res.data.status === "Unauthorized") {
+                        Alert.alert("Login Failed", res.data.message);
+                        console.error("Login failed:", res.data.message);
+                    }
+                })
+                .catch(err => {
+                    Alert.alert("Error", "An error occurred while trying to log in. Please try again later.");
+                    console.error("Error during login:", err);
+                });
         }
         
         return (

@@ -14,7 +14,7 @@ function ViewFieldRate() {
         try {
             
             const token = await AsyncStorage.getItem('token_name');
-            const response = await axios.get('http://192.168.1.4:8086/api/preSettingGET', {
+            const response = await axios.get('http://192.168.1.5:8086/api/preSettingGET', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
