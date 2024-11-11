@@ -46,7 +46,7 @@ const userData= async(req,res)=>{
 
 
 
-//for view transactions history
+// for view transactions history
 const viewTransactions = async(req,res)=>{
     const {token}=req.body
     try {
@@ -61,13 +61,21 @@ const viewTransactions = async(req,res)=>{
         //  const sortedTransactions = user.transactionHistory.sort((a, b) => new Date(b.payDate) - new Date(a.payDate));
         
         //  return res.send({ status: "success", data: sortedTransactions });
-
+        console.log("Test", user.transactionHistory )
         return res.send({ status: "success", data: user.transactionHistory });
 
     } catch (error) {
         return res.status(500).send({ status: "error", error: error.message });
     }
 }
+
+// //for view transactions history
+// app.post('/viewTransactions',async(req,res)=>{
+//     const {name}=req.body
+//     const user=await accountDetails.findOne({name:name})
+//     console.log(user)
+//     return res.send({status:"here it is" , data:user.transactionHistory})
+// })
 
 const showMoneyToPocket = async (req, res) => {
 

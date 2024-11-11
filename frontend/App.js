@@ -12,6 +12,7 @@ import Login from './app/screens/Login';
 import Role from './app/screens/Role';
 import SetFieldRate from './app/screens/SetFieldRate';
 import ViewFieldRate from './app/screens/ViewFieldRate';
+import ViewTransactions from './app/screens/View_Transactions';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ function App() {
         <Stack.Screen name="Role" component={Role}/>
         <Stack.Screen name="SetFieldRate" component={SetFieldRate}/>
         <Stack.Screen name="ViewFieldRate" component={ViewFieldRate}/>
+        <Stack.Screen name="View_Transactions" component={ViewTransactions}/>
       </Stack.Navigator> 
     </NavigationContainer>
   );

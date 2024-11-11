@@ -4,7 +4,7 @@ const router = express.Router();
 const { register, login } = require("../controllers/accountUpdate");
 const { uploadMainBankID } =require("../controllers/mainID");
 const { preSettingGET , preSettingPOST} =require("../controllers/fieldRate");
-const { userData , deleteAccount , feedback, fieldDetails , payOkay , uploadReceiverData , bankBalance , showMoneyToPocket}= require("../controllers/dashboard");
+const { userData , deleteAccount , feedback, fieldDetails , payOkay , uploadReceiverData , bankBalance , showMoneyToPocket , viewTransactions}= require("../controllers/dashboard");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -19,6 +19,6 @@ router.post('/payOkay' , payOkay)
 router.post('/uploadReceiverData' , uploadReceiverData)
 router.post('/bankBalance' , bankBalance)
 router.get('/loadMoneyToPocket' , showMoneyToPocket)
-
+router.post('/viewTransactions' , viewTransactions)
 
 module.exports = router;
