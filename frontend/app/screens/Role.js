@@ -33,6 +33,7 @@ function Role() {
     // const [selectedField, setSelectedField]=useState(fieldOptions[0])
     const [selectedField, setSelectedField]=useState(null)
     const [currentBalance, setCurrentBalance]=useState('')
+    const [currentPocketDigitalBalance , setCurrentPocketDigitalBalance] =useState('')
     const [okay, setOkay]=useState(false)
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true); // Add loading state
@@ -57,6 +58,7 @@ function Role() {
             return;
         }
         console.log("Token retrieved: test", token); 
+
         axios.post('http://192.168.1.4:8086/api/userData', {}, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -67,9 +69,6 @@ function Role() {
             console.log(fetchedUserData);
             setUserData(fetchedUserData) 
             setLoading(false); // Set loading state to false after data is fetched 
-            // if (fetchedUserData.bankBalance && fetchedUserData.bankBalance.length > 0) {
-            //     setCurrentBalance(fetchedUserData.bankBalance[0].currentBalance);
-            // } 
             setCurrentBalance(fetchedUserData.paisa);
         })
         .catch(err => {
@@ -78,8 +77,21 @@ function Role() {
             console.log("Error here", err.response ? err.response.data : err.message);
             setLoading(false); // Set loading state to false even if there's an error
         });
-    }
 
+        try {
+            const response = await axios.get('http://192.168.1.4:8086/api/loadMoneyToPocket', {
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                }
+            });
+            if (response.status === 200) {
+                setCurrentPocketDigitalBalance(response.data.currentBalance);
+            }
+        } catch (error) {
+            console.error('Error loading money:', error.response ? error.response.data : error.message);
+        }
+
+    }
 
     const handleScan = (data) => {
         setScannedData(data);
@@ -93,9 +105,10 @@ function Role() {
     
 
     function validateReceiverID(id) {
-        const regex = /^[A-Za-z]{2}[0-9]{3}$/;
+        const regex = /^[0-9]{2}-[A-Za-z]{1}-[0-9]{2}$/;
         return regex.test(id);
     }
+    
 
     function handleReceiverID(id) {
         setReceiverID(id);
@@ -117,16 +130,21 @@ function Role() {
         getData()
     },[])
 
+ 
+
     useEffect(() => {
     
 
         async function fieldDetails() {
+            console.log("Hello I am runnin")
             const token = await AsyncStorage.getItem('token_name');
             try {
                 const response = await axios.post('http://192.168.1.4:8086/api/fieldDetails', { token, selectedField });
-                console.log("Here", JSON.stringify(response.data.message, null, 2));
+                // console.log("Here", JSON.stringify(response.data.message, null, 2));
+                console.log("Namaste!!") 
+                console.log(response) 
                 const selectedFieldData = response.data.message.find(item => item.selectedField === selectedField);
-                if (selectedFieldData) {
+                if (selectedFieldData) { 
                     console.log("selectedFieldData", selectedFieldData);
                     setFieldLimits(prevFieldLimits => ({
                         ...prevFieldLimits,
@@ -175,7 +193,8 @@ function Role() {
                     ...prevFieldLimits,
                     [selectedField]: response.data.fieldLimit
                 }));
-                setCurrentBalance(response.data.currentBalance);
+                // setCurrentBalance(response.data.currentBalance);
+                setCurrentPocketDigitalBalance(response.data.currentBalance);
                 Alert.alert("Payment Successful");
                 console.log("response.data", response.data.currentBalance);
     
@@ -266,7 +285,14 @@ function Role() {
             <View style={styles.topHolder}>
 
                 <View style={styles.balanceContainer}>
-                    <Text style={styles.balanceText}>Rs.{isBalanceVisible ? currentBalance : '******* '}</Text>
+                    <Text style={styles.balanceText}>In main bank, Rs.{isBalanceVisible ? currentBalance : '******* '}</Text>
+                    <TouchableOpacity onPress={toggleBalanceVisibility}>
+                        <Feather name={isBalanceVisible ? "visibility-off" : "visibility"} size={24} color="black" />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.balanceContainer}>
+                    <Text style={styles.balanceText}>Pocket Expenses is Rs.{isBalanceVisible ? currentPocketDigitalBalance : '******* '}</Text>
                     <TouchableOpacity onPress={toggleBalanceVisibility}>
                         <Feather name={isBalanceVisible ? "visibility-off" : "visibility"} size={24} color="black" />
                     </TouchableOpacity>
@@ -435,11 +461,6 @@ function Role() {
             </View>
                            
             </View>
-
-           
-                        
-          
-
 
             <View style={styles.rightContainer}>
                 <TouchableOpacity style={[styles.rightButton]} onPress={handleViewTransaction}>

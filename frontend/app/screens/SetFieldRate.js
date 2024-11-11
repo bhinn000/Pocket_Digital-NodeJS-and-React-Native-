@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, TextInput, StyleSheet, TouchableOpacity , Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -30,7 +30,7 @@ function SetFieldRate() {
  
         try {
             const token = await AsyncStorage.getItem('token_name');
-            const response = await axios.get('http://192.168.1.3:8086/api/preSettingGET', {
+            const response = await axios.get('http://192.168.1.4:8086/api/preSettingGET', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -101,14 +101,12 @@ function SetFieldRate() {
             const travelValid = handleTravel(budgetData["Travel"]?.budget || '');
 
             const totalRate=parseInt(budgetData["Restaurant/Cafe"]?.budget) + parseInt(budgetData["Canteen"]?.budget) + parseInt(budgetData["Travel"]?.budget)
-           
-            console.log("Hey")
-            console.log(totalRate)
+
             if(totalRate == 100){
 
                  if(cafeValid && canteenValid && travelValid){
                 
-                await axios.post('http://192.168.1.3:8086/api/preSettingPOST', { token, budgets: budgetList }, {
+                await axios.post('http://192.168.1.4:8086/api/preSettingPOST', { token, budgets: budgetList }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -128,15 +126,19 @@ function SetFieldRate() {
             }
             else{
                 console.log("Do mathematical calculation properly , the percentage is always 100%");
+                Alert.alert("Should be 100% at total")
             }
-
-        
-           
+     
     }
 
         return (
             <ScrollView>
-                <Text style={styles.text}>Fields and Rate</Text>
+
+            <TouchableOpacity style={styles.submitBtn} onPress={() => navigation.navigate("ViewFieldRate")}>
+                <Text style={styles.submitText}>View Previous Rate</Text>
+            </TouchableOpacity>
+
+                <Text style={styles.text}> Update Fields and Rate</Text>
                 {[
                     "Restaurant/Cafe",
                     "Canteen",
@@ -203,12 +205,14 @@ const styles = StyleSheet.create({
         marginBottom:30
     },
     submitBtn: {
-        backgroundColor: '#023F88', // Elegant blue color
-        padding: 10,
+        backgroundColor: '#023F88', 
+        paddingTop: 5,
+        paddingBottom:5,
         borderRadius: 5,
-        alignItems: 'center', // Center content horizontally
+        alignItems: 'center',
         marginTop: 10, 
-        width:"30%"
+        marginBottom: 10,
+        width:"40%"
     },
     submitText: {
         color: 'white', // White text color
